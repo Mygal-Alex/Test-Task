@@ -1,30 +1,10 @@
 import { useState, useCallback } from 'react'
-
-interface RequestBody {
-  [key: string]: string | number | boolean | object | null
-}
-
-interface RequestHeaders {
-  [key: string]: string
-}
-
-interface UserResponse {
-  userId: string
-  token: string
-  name: string
-  email: string
-}
-interface UseHTTPReturn {
-  loading: boolean
-  request: (
-    url: string,
-    method?: string,
-    body?: RequestBody | null,
-    headers?: RequestHeaders
-  ) => Promise<UserResponse>
-  error: string | null
-  clearError: () => void
-}
+import {
+  RequestBody,
+  RequestHeaders,
+  UseHTTPReturn,
+  UserResponse
+} from '../types/http'
 
 export const useHTTP = (): UseHTTPReturn => {
   const [loading, setLoading] = useState<boolean>(false)
@@ -46,13 +26,20 @@ export const useHTTP = (): UseHTTPReturn => {
           headers['Content-Type'] = 'application/json'
         }
 
+        console.log('Request URL:', url)
+        console.log('Request Method:', method)
+        console.log('Request Headers:', headers)
+        console.log('Request Body:', requestBody)
+
         const response = await fetch(url, {
           method,
           body: requestBody,
           headers
         })
+
         if (!response.ok) {
-          throw new Error('Something went wrong')
+          const errorText = await response.text()
+          throw new Error(`HTTP error ${response.status}: ${errorText}`)
         }
 
         const data = (await response.json()) as UserResponse
@@ -63,10 +50,13 @@ export const useHTTP = (): UseHTTPReturn => {
         setLoading(false)
         if (err instanceof Error) {
           setError(err.message)
+          console.error('Request Error:', err.message)
           throw err
         } else {
-          setError('An unknown error occurred')
-          throw new Error('An unknown error occurred')
+          const unknownError = 'An unknown error occurred'
+          setError(unknownError)
+          console.error('Request Error:', unknownError)
+          throw new Error(unknownError)
         }
       }
     },

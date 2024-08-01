@@ -1,5 +1,6 @@
+import TasksTable from '../components/tasksTable/tasksTable'
 const TaskPage = () => {
-  return <div>TaskPage</div>
+  return <TasksTable />
 }
 
 export default TaskPage
