@@ -6,6 +6,7 @@ export interface TasksData {
   text: string[]
   amount: number
   genType: string
+  requestSuccess: boolean
 }
 
 export interface TaskProvideContext {
@@ -16,8 +17,7 @@ export interface TaskProvideContext {
   updateTemplateID: (index: number, newTemplateID: string) => void
   updateImage: (index: number, newImage: string) => void
   updateText: (index: number, newText: string) => void
-  requestSuccess: boolean
-  setRequestSuccess: React.Dispatch<React.SetStateAction<boolean>>
+  updateRequest: (index: number, newStatus: boolean) => void
 }
 
 export interface TaskProviderProps {

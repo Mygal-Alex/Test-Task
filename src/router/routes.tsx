@@ -4,13 +4,18 @@ import {
   RouteObject,
   Navigate
 } from 'react-router-dom'
-import TaskPage from '../pages/TaskPage'
+import TaskPage from '../pages/TaskPage/TaskPage'
+import TaskCard from '../pages/TaskCard/TaskCard'
 
 const getRoutes = (): RouteObject[] => {
   return [
     {
       path: '/',
       element: <TaskPage />
+    },
+    {
+      path: '/taskCard/:taskId',
+      element: <TaskCard />
     },
     {
       path: '*',

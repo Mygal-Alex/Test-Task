@@ -4,7 +4,6 @@ import { useTaskContext } from '../../../context/task-context'
 import { useHTTP } from '../../../hooks/http.hook'
 import {
   FormattedTaskRow,
-  TaskContextType,
   TaskRow,
   UseHTTPResponse
 } from '../../../types/genTasks'
@@ -20,8 +19,8 @@ const formatRow = (row: TaskRow): FormattedTaskRow => ({
   text_layers: row.text
 })
 
-const GenTasksButton: React.FC = () => {
-  const { rows, setRequestSuccess } = useTaskContext() as TaskContextType
+const GenTasksButton = ({ index }: { index: number }) => {
+  const { rows, updateRequest } = useTaskContext()
   const { loading, request, error, clearError } = useHTTP() as UseHTTPResponse
   const [openSnackbar, setOpenSnackbar] = useState<boolean>(false)
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(false)
@@ -29,15 +28,12 @@ const GenTasksButton: React.FC = () => {
   const handleClick = async () => {
     try {
       if (rows.length === 0) return
-
-      const formattedRow = formatRow(rows[0])
+      const formattedRow = formatRow(rows[index])
       console.log('Formatted Row:', formattedRow)
-
       const headers: Record<string, string> = {
         Authorization: `${import.meta.env.VITE_API_AUTHORIZATION}`,
         'Content-Type': 'application/json'
       }
-
       const response = await request(
         '/api/tz-front/generate_formats',
         'POST',
@@ -45,13 +41,12 @@ const GenTasksButton: React.FC = () => {
         headers
       )
       console.log('Response:', response)
-
-      setRequestSuccess(true)
+      updateRequest(index, true)
       setOpenSnackbar(true)
       setButtonDisabled(true)
     } catch (err) {
       console.error('Request Error:', err)
-      setRequestSuccess(false)
+      updateRequest(index, false)
     } finally {
       clearError()
     }
@@ -65,13 +60,13 @@ const GenTasksButton: React.FC = () => {
 
   const areAllFieldsFilled =
     rows.length > 0 &&
-    rows[0] &&
-    rows[0].taskName.trim() !== '' &&
-    rows[0].dimension.trim() !== '' &&
-    rows[0].templateID.trim() !== '' &&
-    rows[0].images.length > 0 &&
-    rows[0].text.length > 0 &&
-    rows[0].amount > 0
+    rows[index] &&
+    rows[index].taskName.trim() !== '' &&
+    rows[index].dimension.trim() !== '' &&
+    rows[index].templateID.trim() !== '' &&
+    rows[index].images.length > 0 &&
+    rows[index].text.length > 0 &&
+    rows[index].amount > 0
 
   return (
     <>
@@ -81,7 +76,7 @@ const GenTasksButton: React.FC = () => {
         sx={styles.buttonStyle}
         variant='contained'
       >
-        {loading ? <CircularProgress size={24} /> : 'genTasks'}
+        {loading ? <CircularProgress size={24} /> : 'Generate'}
       </Button>
       <Snackbar
         autoHideDuration={6000}

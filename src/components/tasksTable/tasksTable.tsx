@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {
   Table,
   TableBody,
@@ -7,8 +7,7 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Chip,
-  TextField
+  Chip
 } from '@mui/material'
 import { styles } from './tasksTableStyles'
 import DimensionDropdown from '../dropdowns/dimensionDropdown/dimensionDropdown'
@@ -20,28 +19,14 @@ import { useTaskContext } from '../../context/task-context'
 import GenTasksButton from '../buttons/genTasksButton/genTasksButton'
 import ResultButton from '../buttons/resultButton/resultButton'
 import StatusChip from '../statusChip/statusChip'
+import { useNavigate } from 'react-router-dom'
 
 const TasksTable: React.FC = () => {
-  const { rows, setRows } = useTaskContext()
+  const { rows } = useTaskContext()
   const [modalImageOpen, setModalImageOpen] = useState(false)
   const [modalTextOpen, setModalTextOpen] = useState(false)
   const [currentIndex, setCurrentIndex] = useState<number | null>(null)
-
-  const handleTaskNameChange = (index: number, newTaskName: string) => {
-    setRows((prevRows) => {
-      const updatedRows = [...prevRows]
-      updatedRows[index].taskName = newTaskName
-      return updatedRows
-    })
-  }
-
-  const handleAmountChange = (index: number, newAmount: string) => {
-    setRows((prevRows) => {
-      const updatedRows = [...prevRows]
-      updatedRows[index].amount = Number(newAmount)
-      return updatedRows
-    })
-  }
+  const navigate = useNavigate()
 
   const handleOpenImageModal = (index: number) => {
     setCurrentIndex(index)
@@ -53,12 +38,18 @@ const TasksTable: React.FC = () => {
     setCurrentIndex(null)
   }
 
-  const handleOpenTextModal = () => {
+  const handleOpenTextModal = (index: number) => {
+    setCurrentIndex(index)
     setModalTextOpen(true)
   }
 
   const handleCloseTextModal = () => {
     setModalTextOpen(false)
+    setCurrentIndex(null)
+  }
+
+  const handleNavigate = (index: number) => {
+    navigate(`/taskCard/${index + 1}`)
   }
 
   return (
@@ -84,16 +75,14 @@ const TasksTable: React.FC = () => {
             <TableRow key={index}>
               <TableCell sx={styles.numberColumn}>{index + 1}</TableCell>
               <TableCell sx={styles.numberColumn}>
-                <StatusChip />
+                <StatusChip index={index} />
               </TableCell>
-              <TableCell sx={styles.tableCellStyle}>
-                <TextField
-                  onChange={(e) => handleTaskNameChange(index, e.target.value)}
-                  size='small'
-                  sx={styles.textField}
-                  value={row.taskName}
-                  variant='outlined'
-                />
+              <TableCell
+                onClick={() => handleNavigate(index)}
+                style={{ cursor: 'pointer' }}
+                sx={styles.tableCellStyle}
+              >
+                {row.taskName}
               </TableCell>
               <TableCell sx={styles.tableCellStyle}>
                 <DimensionDropdown index={index} />
@@ -111,7 +100,7 @@ const TasksTable: React.FC = () => {
                 ))}
               </TableCell>
               <TableCell
-                onClick={() => handleOpenTextModal()}
+                onClick={() => handleOpenTextModal(index)}
                 style={{ cursor: 'pointer' }}
                 sx={styles.tableCellStyle}
               >
@@ -119,30 +108,15 @@ const TasksTable: React.FC = () => {
                   <Chip key={idx} label={text} variant='outlined' />
                 ))}
               </TableCell>
-              <TableCell sx={styles.tableCellStyle}>
-                <TextField
-                  InputProps={{
-                    inputProps: {
-                      min: 0,
-                      step: 'any'
-                    }
-                  }}
-                  onChange={(e) => handleAmountChange(index, e.target.value)}
-                  size='small'
-                  sx={styles.textField}
-                  type='number'
-                  value={row.amount}
-                  variant='outlined'
-                />
-              </TableCell>
+              <TableCell sx={styles.tableCellStyle}>{row.amount}</TableCell>
               <TableCell sx={styles.tableCellStyle}>
                 <GenTypeDropdown index={index} />
               </TableCell>
               <TableCell sx={styles.tableCellStyle}>
-                <GenTasksButton />
+                <GenTasksButton index={index} />
               </TableCell>
               <TableCell sx={styles.tableCellStyle}>
-                <ResultButton />
+                <ResultButton index={index} />
               </TableCell>
             </TableRow>
           ))}

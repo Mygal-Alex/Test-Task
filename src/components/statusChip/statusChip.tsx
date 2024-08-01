@@ -1,13 +1,13 @@
 import { Chip } from '@mui/material'
 import { useTaskContext } from '../../context/task-context'
 
-const StatusChip = () => {
-  const { requestSuccess } = useTaskContext()
+const StatusChip = ({ index }: { index: number }) => {
+  const { rows } = useTaskContext()
 
   return (
     <Chip
-      color={requestSuccess ? 'success' : 'primary'}
-      label={requestSuccess ? 'done' : 'to do'}
+      color={rows[index].requestSuccess ? 'success' : 'primary'}
+      label={rows[index].requestSuccess ? 'done' : 'to do'}
     />
   )
 }

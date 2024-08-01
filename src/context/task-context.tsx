@@ -8,19 +8,7 @@ import {
 const TaskContext = createContext<TaskProvideContext>({} as TaskProvideContext)
 
 const TaskProvider = ({ children }: TaskProviderProps) => {
-  const [rows, setRows] = useState<TasksData[]>([
-    {
-      taskName: '',
-      dimension: '1x1',
-      templateID: 'mwpswxcudtwxd',
-      images: [],
-      text: [],
-      amount: 0,
-      genType: 'cyclic_generation'
-    }
-  ])
-
-  const [requestSuccess, setRequestSuccess] = useState<boolean>(false)
+  const [rows, setRows] = useState<TasksData[]>([])
 
   const updateDimension = (index: number, newDimension: string) => {
     setRows((prevRows) => {
@@ -62,6 +50,14 @@ const TaskProvider = ({ children }: TaskProviderProps) => {
     })
   }
 
+  const updateRequest = (index: number, newStatus: boolean) => {
+    setRows((prevRows) => {
+      const updatedRows = [...prevRows]
+      updatedRows[index].requestSuccess = newStatus
+      return updatedRows
+    })
+  }
+
   const contextValue = useMemo(
     () => ({
       rows,
@@ -71,10 +67,9 @@ const TaskProvider = ({ children }: TaskProviderProps) => {
       updateTemplateID,
       updateImage,
       updateText,
-      requestSuccess,
-      setRequestSuccess
+      updateRequest
     }),
-    [rows, setRows, requestSuccess]
+    [rows, setRows]
   )
 
   return (

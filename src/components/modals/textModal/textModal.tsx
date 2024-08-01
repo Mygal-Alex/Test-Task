@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {
   Modal,
   Box,
@@ -28,7 +28,7 @@ const TextModal: React.FC<TextModalProps> = ({ open, handleClose, index }) => {
     <Modal
       aria-describedby='modal-description'
       aria-labelledby='modal-title'
-      onClose={() => {}}
+      onClose={handleClose}
       open={open}
       sx={{
         display: 'flex',
