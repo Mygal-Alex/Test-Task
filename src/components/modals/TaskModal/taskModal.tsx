@@ -10,6 +10,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close'
 import { styles } from './taskModalStyles'
 import { useTaskContext } from '../../../context/task-context'
+import { useCardContext } from '../../../context/card-context'
 
 interface TaskModalProps {
   open: boolean
@@ -20,6 +21,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ open, handleClose }) => {
   const [taskName, setTaskName] = useState('')
   const [amount, setAmount] = useState('')
   const { setRows } = useTaskContext()
+  const { createEmptySubArray } = useCardContext()
 
   const handleAddTask = () => {
     if (taskName.trim() && amount.trim()) {
@@ -39,6 +41,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ open, handleClose }) => {
       setTaskName('')
       setAmount('')
       handleClose()
+      createEmptySubArray()
     }
   }
 

@@ -11,6 +11,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import { styles } from './imageModalStyles'
 import { useTaskContext } from '../../../context/task-context'
 import { ImageModalProps } from '../../../types/imageModal'
+import { useCardContext } from '../../../context/card-context'
 
 const ImageModal: React.FC<ImageModalProps> = ({
   open,
@@ -19,10 +20,12 @@ const ImageModal: React.FC<ImageModalProps> = ({
 }) => {
   const [newImage, setNewImage] = useState('')
   const { updateImage } = useTaskContext()
+  const { addCard } = useCardContext()
 
   const handleAddImage = () => {
     if (newImage.trim()) {
       updateImage(index, newImage)
+      addCard(index, newImage)
       setNewImage('')
       handleClose()
     }
