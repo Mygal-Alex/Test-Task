@@ -7,11 +7,7 @@ import {
 } from '@mui/material'
 import { styles } from './stylesFormDropdownStyles'
 import { useCardContext } from '../../../context/card-context'
-
-interface StylesFormDropdownProps {
-  arrayIndex: number
-  cardIndex: number
-}
+import { StylesFormDropdownProps } from '../../../types/stylesFormDropdown'
 
 const StylesFormDropdown: React.FC<StylesFormDropdownProps> = ({
   arrayIndex,

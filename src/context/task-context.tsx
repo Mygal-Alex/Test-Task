@@ -58,6 +58,24 @@ const TaskProvider = ({ children }: TaskProviderProps) => {
     })
   }
 
+  const addTask = (taskName: string, amount: string) => {
+    if (taskName.trim() && amount.trim()) {
+      setRows((prevRows) => [
+        ...prevRows,
+        {
+          taskName,
+          dimension: '1x1',
+          templateID: 'mwpswxcudtwxd',
+          images: [],
+          text: [],
+          amount: Number(amount),
+          genType: 'cyclic_generation',
+          requestSuccess: false
+        }
+      ])
+    }
+  }
+
   const contextValue = useMemo(
     () => ({
       rows,
@@ -67,7 +85,8 @@ const TaskProvider = ({ children }: TaskProviderProps) => {
       updateTemplateID,
       updateImage,
       updateText,
-      updateRequest
+      updateRequest,
+      addTask
     }),
     [rows, setRows]
   )

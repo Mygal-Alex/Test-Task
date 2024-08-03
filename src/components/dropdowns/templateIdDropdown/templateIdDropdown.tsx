@@ -6,10 +6,7 @@ import { Chip } from '@mui/material'
 import { useState } from 'react'
 import { styles } from './templateIdDropdownStyles'
 import { useTaskContext } from '../../../context/task-context'
-
-interface TemplateIdDropdownProps {
-  index: number
-}
+import { TemplateIdDropdownProps } from '../../../types/templateIdDropdown'
 
 const TemplateIdDropdown: React.FC<TemplateIdDropdownProps> = ({ index }) => {
   const { rows, updateTemplateID } = useTaskContext()

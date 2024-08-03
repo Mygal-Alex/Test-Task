@@ -7,11 +7,7 @@ import {
 } from '@mui/material'
 import { useCardContext } from '../../../context/card-context'
 import { styles } from './flowFormDropdownStyles'
-
-interface FlowFormDropdownProps {
-  arrayIndex: number
-  cardIndex: number
-}
+import { FlowFormDropdownProps } from '../../../types/flowFormDropdown'
 
 const FlowFormDropdown: React.FC<FlowFormDropdownProps> = ({
   arrayIndex,

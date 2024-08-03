@@ -17,10 +17,7 @@ import DimensionFormDropdown from '../dropdowns/dimensionFormDropdown/dimensionF
 import FlowFormDropdown from '../dropdowns/flowFormDropdown/flowFormDropdown'
 import StylesFormDropdown from '../dropdowns/stylesFormDropdown/stylesFormDropdown'
 import GenImagesButton from '../buttons/genImageButton/genImageButton'
-
-interface TaskFormProps {
-  index: number
-}
+import { TaskFormProps } from '../../types/taskForm'
 
 const TaskForm: React.FC<TaskFormProps> = ({ index }) => {
   const { rows } = useTaskContext()

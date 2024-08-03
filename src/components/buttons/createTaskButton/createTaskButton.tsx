@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Button } from '@mui/material'
-import TaskModal from '../../modals/TaskModal/taskModal'
+import TaskModal from '../../modals/taskModal/taskModal'
 
 const CreateTaskButton: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false)

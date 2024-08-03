@@ -18,6 +18,7 @@ export interface TaskProvideContext {
   updateImage: (index: number, newImage: string) => void
   updateText: (index: number, newText: string) => void
   updateRequest: (index: number, newStatus: boolean) => void
+  addTask: (taskName: string, amount: string) => void
 }
 
 export interface TaskProviderProps {
