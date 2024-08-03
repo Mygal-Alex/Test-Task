@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Button } from '@mui/material'
-import TaskModal from '../../modals/taskModal/taskModal'
+import TasksModal from '../../modals/tasksModal/tasksModals'
 
 const CreateTaskButton: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false)
@@ -18,7 +18,7 @@ const CreateTaskButton: React.FC = () => {
       <Button onClick={handleOpenModal} variant='contained'>
         Create Task
       </Button>
-      <TaskModal handleClose={handleCloseModal} open={modalOpen} />
+      <TasksModal handleClose={handleCloseModal} open={modalOpen} />
     </>
   )
 }

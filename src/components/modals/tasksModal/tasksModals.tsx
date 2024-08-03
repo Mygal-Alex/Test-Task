@@ -8,12 +8,13 @@ import {
   IconButton
 } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import { styles } from './taskModalStyles'
+
 import { useTaskContext } from '../../../context/task-context'
 import { useCardContext } from '../../../context/card-context'
 import { TaskModalProps } from '../../../types/taskModal'
+import { styles } from './tasksModalsSryles'
 
-const TaskModal: React.FC<TaskModalProps> = ({ open, handleClose }) => {
+const TasksModal: React.FC<TaskModalProps> = ({ open, handleClose }) => {
   const [taskName, setTaskName] = useState('')
   const [amount, setAmount] = useState('')
   const { addTask } = useTaskContext()
@@ -75,4 +76,4 @@ const TaskModal: React.FC<TaskModalProps> = ({ open, handleClose }) => {
   )
 }
 
-export default TaskModal
+export default TasksModal
